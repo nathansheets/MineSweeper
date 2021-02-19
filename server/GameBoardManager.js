@@ -11,8 +11,15 @@ module.exports.GenerateBoard = ({height, width, difficulty})  => {
         board.push(column);
     }
 
-    var totalMines = Math.floor(((height * width) / 10) * difficulty);
+    // Generate copy of board to send to client without mines.
+    // This is because we don't want client to be able to use dev tools to cheat.
+    var clientBoard = [];
+    for (let row of board) {
+        clientBoard.push(row.slice());
+    }
 
+    // Add Mines
+    var totalMines = Math.floor(((height * width) / 10) * difficulty);
     for (let mineCount = 0; mineCount < totalMines; mineCount++) {
         let row = getRandomInt(height);
         let column = getRandomInt(width);
@@ -22,7 +29,7 @@ module.exports.GenerateBoard = ({height, width, difficulty})  => {
             mineCount--;
         }
     }
-    return board;
+    return clientBoard;
 }
 
 module.exports.CheckSpot = ({xCoord, yCoord}) => {

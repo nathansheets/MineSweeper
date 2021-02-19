@@ -13,19 +13,14 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        this.GetBoard(10, 10, 1);
+        
     }
 
-    GetBoard(height, width, difficulty) {
-        axios.post('/board', {
-            height: height,
-            width: width,
-            difficulty: difficulty
-        })
+    GetBoard(boardSpecs) {
+        axios.post('/board', boardSpecs)
         .then((board) => {
-            console.log(board);
             this.setState({
-                board: board
+                board: board.data
             });
         });
     }
@@ -33,8 +28,8 @@ class App extends React.Component {
     render() {
         return (
             <div id="AppContainer">
-                <NavBar />
-                <GameBoard />
+                <NavBar GetBoard={this.GetBoard.bind(this)}/>
+                <GameBoard Board={this.state.board}/>
             </div>
         )
     }
