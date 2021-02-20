@@ -13,7 +13,7 @@ const GameBoard = ({board, CheckSquare}) => {
             var keyCounter = 0;
             board.map((row) => {
                 row.map((column) => outputBoard.push(
-                <GameSquare key={keyCounter} CheckSquare={CheckSquare} id={keyCounter++}/>
+                <GameSquare key={keyCounter} CheckSquare={CheckSquare} id={keyCounter++} status={column}/>
                 ));
             });
             return outputBoard;

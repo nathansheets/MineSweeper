@@ -13,7 +13,12 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        
+        // Standard Board
+        this.GetBoard({
+            height: 10,
+            width: 10,
+            difficulty: 1
+        });
     }
 
     GetBoard(boardSpecs) {
@@ -26,21 +31,15 @@ class App extends React.Component {
     }
 
     CheckSquare(squareID) {
-        var coords = {
-            x : 0,
-            y : 0
-        };
-
-        while (squareID >= this.state.board.length) {
-            squareID -= this.state.board.length;
-            coords.y++;
-        }
-        coords.x = squareID;
+        var coords = IDtoCoords(squareID, this.state.board.length);
         
         axios.post('/checkSpot', coords)
         .then((res) => {
             var tempBoard = this.state.board;
-            tempBoard[coords.y][coords.x] = res.data ? 'c' : 'b'; // c for clear, b for bomb...
+            tempBoard[coords.y][coords.x] = res.data ? 'C' : 'B'; // c for clear, b for bomb...
+            this.setState({
+                board : tempBoard
+            });
         });
     }
 
@@ -52,6 +51,20 @@ class App extends React.Component {
             </div>
         )
     }
+}
+
+function IDtoCoords(squareID, boardLength) {
+    var coords = {
+        x : 0,
+        y : 0
+    };
+
+    while (squareID >= boardLength) {
+        squareID -= boardLength;
+        coords.y++;
+    }
+    coords.x = squareID;
+    return coords;
 }
 
 export default App;

@@ -6,7 +6,8 @@ module.exports.GenerateBoard = ({height, width, difficulty})  => {
     for (let rows = 0; rows < width; rows++) {
         let column = [];
         for (let columns = 0; columns < height; columns++) {
-            column.push(0);
+            // U for unchecked
+            column.push('U');
         }
         board.push(column);
     }
@@ -23,18 +24,18 @@ module.exports.GenerateBoard = ({height, width, difficulty})  => {
     for (let mineCount = 0; mineCount < totalMines; mineCount++) {
         let row = getRandomInt(height);
         let column = getRandomInt(width);
-        if (board[column][row] === 0) {
-            board[column][row] = 1;
+        if (board[column][row] === 'U') {
+            board[column][row] = 'B';
         } else {
             mineCount--;
         }
     }
-    
+
     return clientBoard;
 }
 
 module.exports.CheckSpot = (coords) => {
-    return board[coords.y][coords.x] === 0;
+    return board[coords.y][coords.x] === 'U';
 }
 
 const getRandomInt = (max) => {
