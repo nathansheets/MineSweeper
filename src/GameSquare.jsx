@@ -1,9 +1,12 @@
 import React from 'react';
 
-const GameSquare = (props) => {
+const GameSquare = ({CheckSquare, id}) => {
+    function ClickHandler() {
+        CheckSquare(id);
+    }
     return(
-        <div>
-            X
+        <div className="gameSquare" onClick={ClickHandler}>
+
         </div>
     )
 }

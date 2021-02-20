@@ -8,7 +8,7 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            board : []
+            board : [[]]
         };
     }
 
@@ -18,18 +18,37 @@ class App extends React.Component {
 
     GetBoard(boardSpecs) {
         axios.post('/board', boardSpecs)
-        .then((board) => {
+        .then((res) => {
             this.setState({
-                board: board.data
+                board: res.data
             });
+        });
+    }
+
+    CheckSquare(squareID) {
+        var coords = {
+            x : 0,
+            y : 0
+        };
+
+        while (squareID >= this.state.board.length) {
+            squareID -= this.state.board.length;
+            coords.y++;
+        }
+        coords.x = squareID;
+        
+        axios.post('/checkSpot', coords)
+        .then((res) => {
+            var tempBoard = this.state.board;
+            tempBoard[coords.y][coords.x] = res.data ? 'c' : 'b'; // c for clear, b for bomb...
         });
     }
 
     render() {
         return (
             <div id="AppContainer">
-                <NavBar GetBoard={this.GetBoard.bind(this)}/>
-                <GameBoard Board={this.state.board}/>
+                <NavBar GetBoard={this.GetBoard.bind(this)} />
+                <GameBoard board={this.state.board} CheckSquare={this.CheckSquare.bind(this)}/>
             </div>
         )
     }

@@ -1,32 +1,32 @@
 import React from 'react';
 import GameSquare from './GameSquare.jsx';
 
-class GameBoard extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+const GameBoard = ({board, CheckSquare}) => {
+    var boardStyle = {
+        gridTemplateColumns: `repeat(${board.length}, 25px)`,
+        gridTemplateRows: `repeat(${board[0].length}, 25px)`
+    };
 
-    RenderBoard() {
-        if (this.props.board !== []) {
-            return (
-                this.props.board.map((row) => {
-                    row.map((column) => {
-                        <GameSquare />
-                    })
-                })
-            )
+    function RenderBoard(board) {
+        if (board && board.length > 1) {
+            var outputBoard = [];
+            var keyCounter = 0;
+            board.map((row) => {
+                row.map((column) => outputBoard.push(
+                <GameSquare key={keyCounter} CheckSquare={CheckSquare} id={keyCounter++}/>
+                ));
+            });
+            return outputBoard;
         } else {
             return (<div></div>)
         }
-    }
+    };
 
-    render() {
-        return (
-            <div id="gameBoard">
-                {this.RenderBoard.bind(this)}
-            </div>
-        )
-    }
+    return (
+        <div id="gameBoard" style={boardStyle}>
+            {RenderBoard(board)}
+        </div>
+    );
 }
 
 export default GameBoard;

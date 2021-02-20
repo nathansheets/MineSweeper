@@ -23,17 +23,18 @@ module.exports.GenerateBoard = ({height, width, difficulty})  => {
     for (let mineCount = 0; mineCount < totalMines; mineCount++) {
         let row = getRandomInt(height);
         let column = getRandomInt(width);
-        if (board[row][column] === 0) {
-            board[row][column] = 1;
+        if (board[column][row] === 0) {
+            board[column][row] = 1;
         } else {
             mineCount--;
         }
     }
+    
     return clientBoard;
 }
 
-module.exports.CheckSpot = ({xCoord, yCoord}) => {
-    return board[yCoord][xCoord];
+module.exports.CheckSpot = (coords) => {
+    return board[coords.y][coords.x] === 0;
 }
 
 const getRandomInt = (max) => {

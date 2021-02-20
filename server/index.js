@@ -26,7 +26,7 @@ app.post('/board', (req, res) => {
 
 app.post('/checkSpot', (req, res) => {
     var spot = Board.CheckSpot(req.body);
-    res.send(board);
+    res.send(spot);
     res.end();
 });
 
