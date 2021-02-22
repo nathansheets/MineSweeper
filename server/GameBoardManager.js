@@ -57,7 +57,6 @@ module.exports.CheckSpot = (coords) => {
     var x = coords[0];
     var y = coords[1];
 
-    // Check if spot is bomb/game over
     if (!IsClearSpot(x, y)) {
         return GameOverBoard();
     }
@@ -67,30 +66,30 @@ module.exports.CheckSpot = (coords) => {
     }
 
     ClearAdjSpots(x, y);
-
     return clientBoard;
 }
 
-// Generate board that shows where bombs were
+// Generate client board that shows where bombs were
 const GameOverBoard = () => {
     var gameOverBoard = [];
+    for (let row of clientBoard) {
+        gameOverBoard.push(row.slice());
+    }
     for (let y = 0; y < board.length; y++) {
-        let newRow = [];
         for (let x = 0; x < board[0].length; x++) {
             // Gameover -> show client where bombs were
-            newRow.push(board[y][x] === 'B' ? 'B' : null);
+            board[y][x] === 'B' ? gameOverBoard[y][x] = 'B' : null;
         }
-        gameOverBoard.push(newRow);
     }
     return gameOverBoard;
 }
 
 // Recursively clear spots up/right/down/left
 const ClearAdjSpots = (x, y) => {
-    if (IsWithinRange(x, y)) {
+    if (IsWithinRange(x, y) && clientBoard[y][x] === 'U') {
         let nearbyBombs = numberBoard[y][x];
 
-        if (clientBoard[y][x] === 'U' && nearbyBombs === 'C') {
+        if (nearbyBombs === 'C') {
             clientBoard[y][x] = 'C';
             tilesLeft--;
     

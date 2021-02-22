@@ -44,9 +44,9 @@ class NavBar extends React.Component {
                         <select value={this.state.difficulty} name="difficulty" onChange={this.handleChange}>
                             <option value="0.5">Easy</option>
                             <option value="1">Normal</option>
-                            <option value="2">Hard</option>
-                            <option value="3">Insane</option>
-                            <option value="4">Impossible</option>
+                            <option value="1.5">Hard</option>
+                            <option value="2">Insane</option>
+                            <option value="2.5">Impossible</option>
                         </select>
                     </label>
                     <br />
