@@ -1,7 +1,7 @@
 import React from 'react';
 
 const GameSquare = ({CheckSquare, coords, status}) => {
-    function ClickHandler() {
+    function ClickHandler(e) {
         CheckSquare(coords);
     }
 
@@ -42,7 +42,7 @@ const GameSquare = ({CheckSquare, coords, status}) => {
                 textColor = 'black';
                     break;
             }
-            console.log(textColor, status);
+            
             return (
                 <div style={{color: textColor}}>
                     {status}

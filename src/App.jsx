@@ -27,7 +27,6 @@ class App extends React.Component {
             this.setState({
                 board: res.data
             });
-            console.log(res.data);
         });
     }
 
