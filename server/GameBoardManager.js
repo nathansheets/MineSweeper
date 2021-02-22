@@ -51,8 +51,6 @@ module.exports.CheckSpot = (coords) => {
     var x = coords[0];
     var y = coords[1];
 
-    console.log(board[y][x]);
-
     // Check if spot is bomb/game over
     if (!IsClearSpot(x, y)) {
         return GameOverBoard();
@@ -66,9 +64,9 @@ module.exports.CheckSpot = (coords) => {
 // Generate board that shows where bombs were
 const GameOverBoard = () => {
     var gameOverBoard = [];
-    for (let row = 0; row < board[0].length; row++) {
+    for (let row = 0; row < board.length; row++) {
         let newRow = [];
-        for (let col = 0; col < board.length; col++) {
+        for (let col = 0; col < board[0].length; col++) {
             // Gameover -> show client where bombs were
             newRow.push(board[col][row] === 'B' ? 'B' : null);
         }
@@ -103,7 +101,7 @@ const GetNearbyBombs = (x, y) => {
             if (row !== 0 || col !== 0) {
                 let newCol = x + col;
                 let newRow = y + row;
-                if (IsWithinRange(newCol, newRow) && !IsClearSpot(newCol, newRow)) {
+                if (IsWithinRange(newCol, newRow) && !IsClearSpot(newRow, newCol)) {
                     numBombs++;
                 }
             }
@@ -114,7 +112,7 @@ const GetNearbyBombs = (x, y) => {
 
 // Clears spot if not bomb, false if not clear (bomb)
 const IsClearSpot = (x, y) => {
-    if (board[y][x] === 'B') {
+    if (board[x][y] === 'B') {
         return false;
     } else {
         return true;
