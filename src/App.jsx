@@ -32,7 +32,6 @@ class App extends React.Component {
     }
 
     CheckSquare(coords) {
-        console.log(coords);
         if (this.state.board[coords[1]][coords[0]] === 'U') {
             axios.post('/checkSpot', coords)
             .then((res) => {

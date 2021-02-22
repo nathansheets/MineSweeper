@@ -1,9 +1,14 @@
+const { cli } = require("webpack");
+
 var board, clientBoard, numberBoard;
 // Board will be used to keep track of bombs
 // ClientBoard will be used to abstract away certain info from client
 // NumberBoard will keep track of nearby bombs per tile
 
+var tilesLeft;
+
 module.exports.GenerateBoard = ({height, width, difficulty})  => {
+    tilesLeft = height * width;
     board = [];
     // Generate base board
     for (let y = 0; y < height; y++) {
@@ -24,6 +29,7 @@ module.exports.GenerateBoard = ({height, width, difficulty})  => {
 
     // Add Mines
     var totalMines = Math.floor(((height * width) / 10) * difficulty);
+    tilesLeft -= totalMines;
     for (let mineCount = 0; mineCount < totalMines; mineCount++) {
         let y = getRandomInt(height);
         let x = getRandomInt(width);
@@ -39,7 +45,6 @@ module.exports.GenerateBoard = ({height, width, difficulty})  => {
     for (let y = 0; y < height; y++) {
         let newRow = [];
         for (let x = 0; x < width; x++) {
-            console.log(x, y);
             newRow.push(GetNearbyBombs(x, y));
         }
         numberBoard.push(newRow);
@@ -51,11 +56,14 @@ module.exports.GenerateBoard = ({height, width, difficulty})  => {
 module.exports.CheckSpot = (coords) => {
     var x = coords[0];
     var y = coords[1];
-    console.log(coords);
 
     // Check if spot is bomb/game over
     if (!IsClearSpot(x, y)) {
         return GameOverBoard();
+    }
+
+    if (tilesLeft === 1) {
+        console.log('Win!');
     }
 
     ClearAdjSpots(x, y);
@@ -84,12 +92,15 @@ const ClearAdjSpots = (x, y) => {
 
         if (clientBoard[y][x] === 'U' && nearbyBombs === 'C') {
             clientBoard[y][x] = 'C';
+            tilesLeft--;
     
             ClearAdjSpots(x + 1, y);
             ClearAdjSpots(x - 1, y);
             ClearAdjSpots(x, y + 1);
             ClearAdjSpots(x, y - 1);
             return;
+        } else if (clientBoard[y][x] === 'U') {
+            tilesLeft--;
         }
         clientBoard[y][x] = nearbyBombs;
     }
