@@ -10,12 +10,12 @@ const GameBoard = ({board, CheckSquare}) => {
     function RenderBoard(board) {
         if (board && board.length > 1) {
             var outputBoard = [];
-            var keyCounter = 0;
-            board.map((row) => {
-                row.map((column) => outputBoard.push(
-                <GameSquare key={keyCounter} CheckSquare={CheckSquare} id={keyCounter++} status={column}/>
-                ));
-            });
+            for (let y = 0; y < board.length; y++) {
+                for (let x = 0; x < board[0].length; x++) {
+                    let coords = [x, y];
+                    outputBoard.push(<GameSquare key={coords} CheckSquare={CheckSquare} coords={coords} status={board[y][x]}/>);
+                }
+            }
             return outputBoard;
         } else {
             return (<div></div>)

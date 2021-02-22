@@ -3,7 +3,7 @@ const webpack = require('webpack');
 
 module.exports = {
   mode: 'development',
-  entry: 'index.jsx',
+  entry: './src/index.jsx',
   module: {
     rules: [{
       test: /\.(js|jsx)$/,

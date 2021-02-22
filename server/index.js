@@ -19,14 +19,14 @@ app.get('/', (req, res) => {
 });
 
 app.post('/board', (req, res) => {
-    var board = Board.GenerateBoard(req.body);
-    res.send(board);
+    var newBoard = Board.GenerateBoard(req.body);
+    res.send(newBoard);
     res.end();
 });
 
 app.post('/checkSpot', (req, res) => {
-    var spot = Board.CheckSpot(req.body);
-    res.send(spot);
+    var newBoard = Board.CheckSpot(req.body);
+    res.send(newBoard);
     res.end();
 });
 
