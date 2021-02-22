@@ -39,7 +39,8 @@ module.exports.GenerateBoard = ({height, width, difficulty})  => {
     for (let y = 0; y < height; y++) {
         let newRow = [];
         for (let x = 0; x < width; x++) {
-            newRow.push(GetNearbyBombs(y, x));
+            console.log(x, y);
+            newRow.push(GetNearbyBombs(x, y));
         }
         numberBoard.push(newRow);
     }
@@ -50,6 +51,7 @@ module.exports.GenerateBoard = ({height, width, difficulty})  => {
 module.exports.CheckSpot = (coords) => {
     var x = coords[0];
     var y = coords[1];
+    console.log(coords);
 
     // Check if spot is bomb/game over
     if (!IsClearSpot(x, y)) {
@@ -64,11 +66,11 @@ module.exports.CheckSpot = (coords) => {
 // Generate board that shows where bombs were
 const GameOverBoard = () => {
     var gameOverBoard = [];
-    for (let row = 0; row < board.length; row++) {
+    for (let y = 0; y < board.length; y++) {
         let newRow = [];
-        for (let col = 0; col < board[0].length; col++) {
+        for (let x = 0; x < board[0].length; x++) {
             // Gameover -> show client where bombs were
-            newRow.push(board[col][row] === 'B' ? 'B' : null);
+            newRow.push(board[y][x] === 'B' ? 'B' : null);
         }
         gameOverBoard.push(newRow);
     }
@@ -101,7 +103,7 @@ const GetNearbyBombs = (x, y) => {
             if (row !== 0 || col !== 0) {
                 let newCol = x + col;
                 let newRow = y + row;
-                if (IsWithinRange(newCol, newRow) && !IsClearSpot(newRow, newCol)) {
+                if (IsWithinRange(newCol, newRow) && !IsClearSpot(newCol, newRow)) {
                     numBombs++;
                 }
             }
@@ -112,7 +114,7 @@ const GetNearbyBombs = (x, y) => {
 
 // Clears spot if not bomb, false if not clear (bomb)
 const IsClearSpot = (x, y) => {
-    if (board[x][y] === 'B') {
+    if (board[y][x] === 'B') {
         return false;
     } else {
         return true;

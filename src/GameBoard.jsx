@@ -3,8 +3,8 @@ import GameSquare from './GameSquare.jsx';
 
 const GameBoard = ({board, CheckSquare}) => {
     var boardStyle = {
-        gridTemplateColumns: `repeat(${board.length}, 25px)`,
-        gridTemplateRows: `repeat(${board[0].length}, 25px)`
+        gridTemplateColumns: `repeat(${board[0].length}, 25px)`,
+        gridTemplateRows: `repeat(${board.length}, 25px)`
     };
 
     function RenderBoard(board) {
