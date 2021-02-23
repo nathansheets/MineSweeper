@@ -1,13 +1,15 @@
 const { cli } = require("webpack");
 
-var board, clientBoard, numberBoard;
+var board, clientBoard, numberBoard, gameOverBoard;
 // Board will be used to keep track of bombs
 // ClientBoard will be used to abstract away certain info from client
 // NumberBoard will keep track of nearby bombs per tile
 
 var tilesLeft;
+var gameOver;
 
 module.exports.GenerateBoard = ({height, width, difficulty})  => {
+    gameOver = false;
     tilesLeft = height * width;
     board = [];
     // Generate base board
@@ -54,24 +56,29 @@ module.exports.GenerateBoard = ({height, width, difficulty})  => {
 }
 
 module.exports.CheckSpot = (coords) => {
-    var x = coords[0];
-    var y = coords[1];
+    if (!gameOver) {
+        var x = coords[0];
+        var y = coords[1];
 
-    if (!IsClearSpot(x, y)) {
-        return GameOverBoard();
+        if (!IsClearSpot(x, y)) {
+            gameOver = true;
+            return GameOverBoard();
+        }
+
+        if (tilesLeft === 1) {
+            console.log('Win!');
+            gameOver = true;
+        }
+
+        ClearAdjSpots(x, y);
+        return clientBoard;
     }
-
-    if (tilesLeft === 1) {
-        console.log('Win!');
-    }
-
-    ClearAdjSpots(x, y);
-    return clientBoard;
+    return gameOverBoard
 }
 
 // Generate client board that shows where bombs were
 const GameOverBoard = () => {
-    var gameOverBoard = [];
+    gameOverBoard = [];
     for (let row of clientBoard) {
         gameOverBoard.push(row.slice());
     }

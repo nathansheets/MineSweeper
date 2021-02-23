@@ -24,22 +24,22 @@ const GameSquare = ({CheckSquare, coords, status}) => {
                     textColor = 'green';
                     break;
                 case 3: 
-                textColor = 'red';
+                    textColor = 'red';
                     break;
                 case 4: 
-                textColor = 'navy';
+                    textColor = 'navy';
                     break;
                 case 5: 
-                textColor = 'maroon';
+                    textColor = 'maroon';
                     break;
                 case 6: 
-                textColor = 'black';
+                    textColor = 'black';
                     break;
                 case 7: 
-                textColor = 'black';
+                    textColor = 'black';
                     break;
                 case 8: 
-                textColor = 'black';
+                    textColor = 'black';
                     break;
             }
             
